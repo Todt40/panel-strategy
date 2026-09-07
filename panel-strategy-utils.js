@@ -1,7 +1,7 @@
 // panel-strategy-utils.js
 //
 // Shared helpers: config merging, entity/area lookups, and the filter-
-// matching logic also used (as its own copy) by area-device-list-card.js.
+// matching logic also used (as its own copy) by auto-area-device-card.js.
 
 export function mergeDeep(base, override) {
   if (Array.isArray(base) || Array.isArray(override)) {

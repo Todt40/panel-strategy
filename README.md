@@ -1,6 +1,10 @@
 # Panel Strategy
 
+[![hacs_badge](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://github.com/hacs/integration)
+
 A Home Assistant Lovelace [dashboard strategy](https://www.home-assistant.io/dashboards/strategies/) (`custom:panel-strategy`) that generates a full tablet/panel-style dashboard — a home screen, one subview per room, device-category pages, and a cameras tab — directly from your area/entity/device registries. Add a new room or a new light in Home Assistant and it just shows up; no dashboard editing required.
+
+<img src="images/preview.png" width="800" alt="Panel Strategy Home view">
 
 ## Why
 
@@ -19,12 +23,20 @@ Everything renders as [Bubble Card](https://github.com/Clooos/Bubble-Card) butto
 ## Requirements
 
 - [Bubble Card](https://github.com/Clooos/Bubble-Card) — every generated button is a `custom:bubble-card`. Required.
-- **Area Device List Card** *(separate project, not yet published — install it the same way as this one)* — used by the device-category pages. Only required if you configure `device_categories`.
+- [Auto Area Device Card](https://github.com/Todt40/auto-area-device-card) — used by the device-category pages. Only required if you configure `device_categories`.
 - [navbar-card](https://github.com/joseluis9595/lovelace-navbar-card) — only required if you configure `navbar`. This strategy passes your navbar config through as-is and additionally injects a back button that appears only on subviews (see [Navbar & back button](#navbar--back-button)).
 - [advanced-camera-card](https://github.com/dermotduffy/advanced-camera-card) — only required if you have camera entities (the Kameras tab uses it).
 - Anything you reference yourself in `views.extra` (see below) — the strategy doesn't require any of those, they're entirely up to you.
 
 ## Installation
+
+### HACS (recommended)
+
+1. In HACS, go to the three-dot menu (top right) → **Custom repositories**, add this repository's URL with category **Dashboard**.
+2. Search for "Panel Strategy" in HACS and install it.
+3. HACS adds the Lovelace resource automatically. Reload your browser (clear cache if it doesn't show up), then create a dashboard and set the strategy — see [Quick start](#quick-start) below.
+
+### Manual
 
 1. Copy every `panel-strategy*.js` file in this repo into `config/www/panel-strategy/` on your Home Assistant instance (same folder — they load each other as siblings).
 2. Add it as a Lovelace resource (Settings → Dashboards → ⋮ → Resources → Add Resource):
@@ -283,8 +295,12 @@ This is entirely optional — plain, unstyled cards work fine too. If you reuse 
 ## Limitations
 
 - The Home view's room-grid row count is computed once from your browser's viewport height when the dashboard loads, not recalculated live — resize or rotate the screen and you'll need to reload the dashboard for the row count to adjust.
-- Only entities assigned to an area that itself belongs to a floor are considered "real rooms" (Home grid, room subviews, and — via Area Device List Card's own `require_floor` option — device pages). Areas with no floor (e.g. a technical/organizational area) never show up as a room. If your dashboard comes up with no rooms at all, this is the first thing to check — Settings → Areas → Floors, and make sure each area you expect to see is assigned to one (older Home Assistant installs, from before floors existed, often have areas with none set).
+- Only entities assigned to an area that itself belongs to a floor are considered "real rooms" (Home grid, room subviews, and — via Auto Area Device Card's own `require_floor` option — device pages). Areas with no floor (e.g. a technical/organizational area) never show up as a room. If your dashboard comes up with no rooms at all, this is the first thing to check — Settings → Areas → Floors, and make sure each area you expect to see is assigned to one (older Home Assistant installs, from before floors existed, often have areas with none set).
 - There's no built-in way to hide a single camera from the Kameras tab short of hiding or disabling it in Home Assistant's own entity settings — every non-excluded `camera.*` entity is included, with no per-camera opt-out in config.
+
+## Issues
+
+Found a bug or have a feature request? [Open an issue](https://github.com/Todt40/panel-strategy/issues).
 
 ## License
 

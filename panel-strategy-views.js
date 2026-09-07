@@ -272,7 +272,7 @@ export function buildRoomView(area, config, hass, builders, utils) {
     const entityIds = byCategory.get(category);
     if (!entityIds.length) continue;
     const deviceCards = entityIds.map((entityId) => {
-      // Same default as area-device-list-card.js: light/switch default to
+      // Same default as auto-area-device-card.js: light/switch default to
       // a toggling 'switch' button, everything else to 'state'.
       const domain = entityId.slice(0, entityId.indexOf('.'));
       const buttonType = category.button_type || (domain === 'light' || domain === 'switch' ? 'switch' : 'state');
@@ -355,7 +355,7 @@ export function buildDevicesView(config, hass, builders, utils, hasCameras) {
 }
 
 // One view per device_categories entry, listing every entity assigned to
-// it across all areas, grouped by area via area-device-list-card.js.
+// it across all areas, grouped by area via auto-area-device-card.js.
 //
 // entityIds is that category's share of the assignEntitiesToCategories
 // result computed once in panel-strategy.js, passed as a literal
@@ -365,7 +365,7 @@ export function buildDevicesView(config, hass, builders, utils, hasCameras) {
 // "Sonstiges" would match everything instead of only its leftovers.
 export function buildDeviceCategoryView(category, entityIds, config, hass, builders, utils) {
   const listCard = {
-    type: 'custom:area-device-list-card',
+    type: 'custom:auto-area-device-card',
     entity_ids: entityIds,
     ...(category.button_type ? { button_type: category.button_type } : {}),
     hidden_labels: config.areas?.hidden_labels || ['hidden'],

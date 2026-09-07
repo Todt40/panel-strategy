@@ -120,7 +120,7 @@ export class PanelStrategy {
       let deviceViews = [];
       if (categories.length) {
         // Not scoped to roomAreas here — which areas a device page
-        // actually displays is area-device-list-card.js's own job (its
+        // actually displays is auto-area-device-card.js's own job (its
         // require_floor/hidden_labels options). Scoping it here too would
         // just be a second, redundant place doing the same filtering.
         const allAreaIds = new Set(Object.keys(hass.areas || {}));
