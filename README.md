@@ -32,6 +32,8 @@ Everything renders as [Bubble Card](https://github.com/Clooos/Bubble-Card) butto
 
 ### HACS (recommended)
 
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=Todt40&repository=panel-strategy&category=plugin)
+
 1. In HACS, go to the three-dot menu (top right) → **Custom repositories**, add this repository's URL with category **Dashboard**.
 2. Search for "Panel Strategy" in HACS and install it.
 3. HACS adds the Lovelace resource automatically. Reload your browser (clear cache if it doesn't show up), then create a dashboard and set the strategy — see [Quick start](#quick-start) below.
@@ -301,6 +303,10 @@ This is entirely optional — plain, unstyled cards work fine too. If you reuse 
 ## Issues
 
 Found a bug or have a feature request? [Open an issue](https://github.com/Todt40/panel-strategy/issues).
+
+## Support
+
+[![Buy Me A Coffee](https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png)](https://buymeacoffee.com/todt40)
 
 ## License
 
