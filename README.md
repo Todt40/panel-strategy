@@ -197,6 +197,7 @@ If `device_categories` is empty, no "Devices" button/picker/category pages are g
 ### Hiding entities from rooms
 
 Create a label named "Hidden" in Home Assistant and assign it to any entity (or to a whole device). Those entities no longer appear in the room views, but stay on the device pages. Use `entities.hidden_labels` to match other label IDs and `entities.hide_in_devices: true` to hide them on the device pages as well.
+The casing of the label IDs is important, normally it is lowercase.
 
 ```yaml
 strategy:
