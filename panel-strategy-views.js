@@ -265,7 +265,8 @@ export function buildRoomView(area, config, hass, builders, utils) {
   const buttonHeight = layout.button_height ?? 90;
   const categoryColumns = layout.room_category_columns ?? 3;
   const categories = config.device_categories || [];
-  const byCategory = utils.assignEntitiesToCategories(hass, categories, new Set([area.area_id]));
+  const hiddenLabels = config.entities?.hidden_labels || ['hidden'];
+  const byCategory = utils.assignEntitiesToCategories(hass, categories, new Set([area.area_id]), hiddenLabels);
 
   const groups = [];
   for (const category of categories) {

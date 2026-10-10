@@ -26,6 +26,13 @@ export const defaultConfig = {
   areas: {
     hidden_labels: ['hidden'],
   },
+  // Entities carrying any of these labels (on the entity itself or on its
+  // device) are left out of the room subviews. hide_in_devices also drops
+  // them from the device pages; off by default.
+  entities: {
+    hidden_labels: ['hidden'],
+    hide_in_devices: false,
+  },
   // The Kameras view (auto-discovered camera.* entities). live_provider is
   // applied to every discovered camera the same way.
   cameras: {

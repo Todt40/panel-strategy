@@ -104,6 +104,8 @@ All of these go under `strategy:` (i.e. `type: custom:panel-strategy` is a sibli
 | `persons` | `[]` | See [Persons](#persons) below. |
 | `device_categories` | `[]` | See [Device categories](#device-categories) below. |
 | `areas.hidden_labels` | `['hidden']` | Areas carrying any of these labels are skipped everywhere (Home room grid, room subviews, device pages). |
+| `entities.hidden_labels` | `['hidden']` | Entities (or their device) carrying any of these labels are skipped in the room subviews, but still shown on the device pages. |
+| `entities.hide_in_devices` | `false` | Also skip those entities on the device pages. |
 | `areas.order` | `[]` | `area_id`s shown first, in this order, on the Home room grid. Anything not listed falls back to floor level, then name. |
 | `cameras.live_provider` | `'go2rtc'` | Passed to every discovered camera on the Kameras tab. |
 | `room_columns` | `3` | Room-card columns per screenful on the Home view (extra rooms page off-screen via horizontal swipe). |
@@ -191,6 +193,20 @@ An entity that doesn't match *any* category simply doesn't show up anywhere (roo
 An entity with no area assigned at all (directly, or via its device) is skipped the same way, category filters aside — assign it to an area first if it should show up.
 
 If `device_categories` is empty, no "Devices" button/picker/category pages are generated at all — the Home view just omits that button.
+
+### Hiding entities from rooms
+
+Create a label named "Hidden" in Home Assistant and assign it to any entity (or to a whole device). Those entities no longer appear in the room views, but stay on the device pages. Use `entities.hidden_labels` to match other label IDs and `entities.hide_in_devices: true` to hide them on the device pages as well.
+
+```yaml
+strategy:
+  type: custom:panel-strategy
+  entities:
+    hidden_labels: [hidden]     # label IDs, not display names
+    hide_in_devices: false
+```
+
+The label ID is generated from the name when the label is created and doesn't change if you rename it later.
 
 ### Layout
 

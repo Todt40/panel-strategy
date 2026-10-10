@@ -124,7 +124,12 @@ export class PanelStrategy {
         // require_floor/hidden_labels options). Scoping it here too would
         // just be a second, redundant place doing the same filtering.
         const allAreaIds = new Set(Object.keys(hass.areas || {}));
-        const byCategory = mods.utils.assignEntitiesToCategories(hass, categories, allAreaIds);
+        // Hidden-labelled entities stay visible on the device pages unless
+        // entities.hide_in_devices is set.
+        const deviceHiddenLabels = config.entities?.hide_in_devices
+          ? config.entities?.hidden_labels || ['hidden']
+          : [];
+        const byCategory = mods.utils.assignEntitiesToCategories(hass, categories, allAreaIds, deviceHiddenLabels);
         deviceViews = [
           mods.buildDevicesView(config, hass, mods.builders, mods.utils, cameraEntityIds.length > 0),
           ...categories.map((category) =>

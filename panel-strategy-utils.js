@@ -58,6 +58,17 @@ export function entityArea(hass, entityId) {
   return device?.area_id || null;
 }
 
+// True if the entity itself, or the device it belongs to, carries any of the
+// given labels (label_ids, e.g. 'hidden' for a label named "Hidden").
+export function hasAnyLabel(hass, entityId, labels) {
+  if (!labels?.length) return false;
+  const reg = hass.entities?.[entityId];
+  if (!reg) return false;
+  if (reg.labels?.some((l) => labels.includes(l))) return true;
+  const device = reg.device_id ? hass.devices?.[reg.device_id] : null;
+  return Boolean(device?.labels?.some((l) => labels.includes(l)));
+}
+
 function visibleAreas(hass, hiddenLabels) {
   return Object.values(hass.areas || {})
     .filter((a) => !a.labels?.some((l) => hiddenLabels.includes(l)))
@@ -90,12 +101,14 @@ export function visibleAreasByFloor(hass, hiddenLabels, order = []) {
 // single room (buildRoomView) and for the device pages, area-wide
 // (panel-strategy.js) — computing it once here is what keeps those two
 // views in agreement.
+// hiddenLabels: entities carrying any of these labels are skipped.
 //
 // Returns a Map<category, entityId[]>, each array sorted by friendly name.
-export function assignEntitiesToCategories(hass, categories, areaIds) {
+export function assignEntitiesToCategories(hass, categories, areaIds, hiddenLabels = []) {
   const byCategory = new Map(categories.map((c) => [c, []]));
   for (const entityId in hass.states) {
     if (isAutoExcluded(hass, entityId)) continue;
+    if (hasAnyLabel(hass, entityId, hiddenLabels)) continue;
     const areaId = entityArea(hass, entityId);
     if (!areaId || !areaIds.has(areaId)) continue;
     const attrs = hass.states[entityId].attributes;
